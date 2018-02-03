@@ -1,0 +1,83 @@
+
+/*background: linear-gradient(90deg, #000033,#037BB5,#000033);*/
+body{
+ margin: 0;
+ background: url(NotesScreen.jpg);
+ position: absolute;
+ background-position: center;
+ background-attachment: fixed;
+ background-repeat: no-repeat;
+ background-size: cover;
+ width: 100vw;
+ height: 100vh;
+}
+
+
+
+
+
+#main{
+width:100%;
+height:90vh;
+position:relative;
+top:20px;
+margin:0;
+overflow:hidden;
+border-top-width:20px;
+	border-top-color:green;
+/*box-shadow:4px 10px 99px white ;*/
+opacity:1;
+}
+#mainback{
+	height:100%;
+	width:100%;
+	margin:0;
+	position:absolute;
+	border-top-width:20px;
+	border-top-color:green;
+	border-bottom-width:20px;
+	background: linear-gradient(180deg,  #757F9A,#D7DDE8);
+	opacity:1;
+}
+
+#note{
+	background-color:rgba(0,255,255,0.6);
+	border-width:2px;
+	border-color:white;
+	border-radius:10%;
+	position:relative;
+	left:100px;
+	top:100px;
+	height:20px;
+	width:20px;
+}
+#note>textarea{
+	overflow:hidden;
+	resize:none;
+	box-sizing:border-box;
+	color:white;
+	height:100%;
+	border-radius:10%;
+	margin:0;
+	width:100%;
+	background:transparent;
+}
+
+#note>textarea:hover{
+	cursor:-webkit-grab;
+}
+#note>textarea:active{
+	cursor:-webkit-grabbing;
+}
+
+#addNote {
+	background:cyan;
+	position:absolute;
+	width:100px;
+	height:100px;
+	border-radius:50%;
+	right:100px;
+	bottom:100px;
+}
+
+
