@@ -24,6 +24,9 @@ h2 , h3 , #joinUsBtn{
 }
 #joinUsBtn{
 	color:	#7FFFD4;
+	background-color:rgba(132, 0, 255,0.75);
+	margin-top: 7em;
+	height:10vh;
 }
 #mainInfo{	
 	text-align:center;
