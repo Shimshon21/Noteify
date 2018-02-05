@@ -1,41 +1,34 @@
-		var numOfNotes = 0;
+		
+	var numOfNotes = 0;
 	let main = document.getElementById("main");
 	
-
-$(() =>{
-	
-	animateNote($(".note"))
-		console.log(main.getBoundingClientRect());
-		//Add note button.
-		$("#addNote").click(()=>{ 
-		numOfNotes += 1;
-			var newNote =$('<div class="note"></div>');
-			newNote.css({
-	'background-color':'cyan',
-	'border-width':'2px',
-	'border-color':'white',
-	'border-radius':'10%',
-	position:'absolute',
-	position:'relative',
-	left:'100px',
-	height:'200px',
-	width:'200px'})
+//On load.
+	$(() =>{
+			animateNote($(".note"))
+			//Add note with dragElement function.
+		$("#addNote").click(()=>{
+			numOfNotes += 1;
+			var newNote =$('<div class="note" onload="animateNote"><div id="options">&#9776;</div><textarea></textarea></div>');
 			$("#main").append(newNote);
-			console.log(document.getElementsByClassName(("note"))[numOfNotes]);
-				dragElement(document.getElementsByClassName(("note"))[numOfNotes]);
+			dragElement(document.getElementsByClassName(("note"))[numOfNotes]);
 		});
 		
-});
+	});
+
+	
+		
 
 
-dragElement(document.getElementsByClassName(("note"))[0]);
+	//First note created.			
+	dragElement(document.getElementsByClassName(("note"))[0]);			
+	
+	function dragElement(elmnt) {
+	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+	  elmnt.onmousedown = dragMouseDown;
 
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    elmnt.onmousedown = dragMouseDown;
-
+	//when click on note.
   function dragMouseDown(e) {
-    e = e || window.event;//??
+    e = e || window.event;
     // get the mouse cursor position at startup:
     pos3 = e.clientX;
     pos4 = e.clientY;
@@ -44,6 +37,7 @@ function dragElement(elmnt) {
     document.onmousemove = elementDrag;
   }
 
+  //When drag note.
   function elementDrag(e) {
     e = e || window.event;
     // calculate the new cursor position:
@@ -59,30 +53,29 @@ function dragElement(elmnt) {
 	elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
   }
   
-
-
+  //stop moving when mouse button is released.
   function closeDragElement() {
-    /* stop moving when mouse button is released:*/
     document.onmouseup = null;
     document.onmousemove = null;
   }
 }
 
-
+//Animation for notes.
 function animateNote(elemnt){
-	console.log("animation");
 	var height = 20;
 	var width = 20;
 	var  note =$(".note")[0];
-console.log(note.offsetHeight);
 	var a=setInterval(function(){
-		if(note.offsetHeight <= 200){
-	elemnt.css({"height":(height += 20)+'px',"width":(width += 20)+'px'});
-	console.log(note.offsetHeight);
-		}else{
+	if(elemnt.offsetHeight < 200){
+		elemnt.css({"height":(height += 20)+'px',"width":(width += 20)+'px'});
+	}else{
 			clearInterval(a);
 		}
 	},40);
-	console.log("loaded");
+}
+
+//Change note color.
+function changeColor(elemnt){
+	$(".note")[0].css('background-color','red');
 }
 
