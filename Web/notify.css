@@ -1,4 +1,3 @@
-
 body{
 	margin: 0;
 	background: url(home2.jpg);
@@ -22,11 +21,16 @@ h2 , h3 , #joinUsBtn{
 	margin-top:15dp;
 	margin-bottom:25dp;
 }
+section{
+	width:100%;
+	height:65vh;
+}
 #joinUsBtn{
-	color:	#7FFFD4;
-	background-color:rgba(132, 0, 255,0.75);
+	font-size: 24px;
+	background-color:rgba(0,250,154,0.15);
 	margin-top: 7em;
 	height:10vh;
+	border-style: solid;
 }
 #mainInfo{	
 	text-align:center;

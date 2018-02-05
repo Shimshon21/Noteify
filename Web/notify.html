@@ -4,18 +4,18 @@
     <title>Notify</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="notify.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="notify.js"></script>
 
 </head>
 <body background="home.jpg">
 	<nav class="navbar navbar-inverse">
-	
-
     <div class="container-fluid">
-
+	
+	
         <!-- Logo -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#hamburger">
@@ -26,26 +26,34 @@
             <a href="#" class="navbar-brand">Notify</a>
         </div>
 
+		
         <!--  in here i have my navigation bar items(buttons search etc)-->
         <div class="collapse navbar-collapse" id="hamburger">
             <ul class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
 				<li ><a href="#">About us</a></li>
-				<li ><a href="#">Contact us</a></li>
+				<li ><a href="">Contact us</a></li>
 				<li ><a href="#">Search</a></li>
 				<li ><a href="#">Whats new</a></input>
-				<li ><a href="#">Search us on facebook</a></li>
+				<li ><a target= "_blank" href="https://www.facebook.com/Scorpions/">Search us on facebook</a></li>
+				<!--target = "_blank is to open my link in new tab and not on the same tab"-->
             </ul>
+			
+			
 			<form class="navbar-form navbar-left" >
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="search...">
 				</div>
 				<button type="submit" class="btn btn-info">Submit</button>
 			</form>
+			
+			
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 			</ul>
+			
+			
         </div>
     </div>
 </nav>
@@ -57,9 +65,11 @@
 	</div>	
 	<div class="container"><!--a container for the main button-->
 		<!--the libe below is for centering the button -->
-		<div class="row">
-			<button id="joinUsBtn" type="button" class="btn btn-success col-xs-4 col-xs-offset-4" >Come and join us</button> 
-		</div>	
+		<section>
+			<div class="row">
+				<button id="joinUsBtn" type="button" class="btn btn-success col-xs-4 col-xs-offset-4" >Come and join us</button> 
+			</div>	
+		</section>	
 	</div>
 
 </body>
