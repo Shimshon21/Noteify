@@ -8,9 +8,10 @@
 			//Add note with dragElement function.
 		$("#addNote").click(()=>{
 			numOfNotes += 1;
-			var newNote =$('<div class="note" onload="animateNote"><div id="options">&#9776;</div><textarea></textarea></div>');
+			var newNote =$('<div id="note" class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button></div><textarea></textarea></div>');
 			$("#main").append(newNote);
-			dragElement(document.getElementsByClassName(("note"))[numOfNotes]);
+			console.log(newNote[0]);
+			dragElement(newNote[0]);
 		});
 		
 	});
@@ -76,6 +77,24 @@ function animateNote(elemnt){
 
 //Change note color.
 function changeColor(elemnt){
-	$(".note")[0].css('background-color','red');
+	console.log(elemnt.parentNode.parentNode.childNodes);
+	if(elemnt.checked){
+		elemnt.parentNode.parentNode.style.backgroundColor="rgba(0,255,0,0.6)" ;
+		elemnt.parentNode.parentNode.style.height="20px"
+		elemnt.parentNode.parentNode.childNodes[3].style.display="none";
+	}else{
+		elemnt.parentNode.parentNode.style.backgroundColor="rgba(0,255,255,0.6)";
+		elemnt.parentNode.parentNode.style.height="200px"
+		elemnt.parentNode.parentNode.childNodes[3].style.display="block";
+	}
+}
+
+//Delete note.
+function deleteNote(note){
+	console.log("clicked")
+	note.parentNode.parentNode.remove();
+	
+	
+	
 }
 

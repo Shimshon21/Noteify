@@ -39,7 +39,7 @@ opacity:1;
 	border-top-width:20px;
 	border-top-color:rgba(0,0,0,0.6);
 	background: linear-gradient(180deg,  #757F9A,#D7DDE8);
-	opacity:0.4;
+	opacity:0.6;
 }
 
 .note{
@@ -97,18 +97,26 @@ opacity:1;
 	bottom:100px;
 }
 
-#options{
+.options{
 	display:inline ;
 	height:10%;
 		width:100%;
 	cursor:-webkit-grab;
 }
+.options >input{
+margin-left:10px;
+}
+.options >button{
+height:10%;
+  background-image: url( 'trash.png' );
+  background-size:20px;
+}
 
-#options:hover{
+.options:hover{
 	cursor:-webkit-grab;
 }
 
-#options:active{
+.options:active{
 	cursor:-webkit-grabbing;
 }
 
