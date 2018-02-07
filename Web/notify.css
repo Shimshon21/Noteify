@@ -3,8 +3,7 @@ body{
 	background: url(home2.jpg);
 	position: absolute;
 	background-position: center;
-	background-attachment: fixed;
-	background-repeat: no-repeat;
+	background-attachment: fixed;	
 	background-size: cover;
 	width: 100vw;
 	height: 100vh;
@@ -35,6 +34,10 @@ section{
 	border-cursor:text;
 	width:80%
 	position: center;
+}
+iframe{
+	width:100%;
+	height:80vh;
 }
 /*
 #mainInfo{	
