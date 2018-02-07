@@ -1,24 +1,30 @@
 		
 	var numOfNotes = 0;
+	const numSet = new Set();
+	var notes = "";
+	var USER_NAME="userName";
+	//var storage = window.localStorage;
 	let main = document.getElementById("main");
-	
+	var taskDesc =[];
 //On load.
 	$(() =>{
+	;
+		console.log($("#note")[0]);
+		numSet.add($("#note")[0])
 			animateNote($(".note"))
+		taskDesc= JSON.parse(localStorage.getItem(USER_NAME));
+			getInfo()
+			//$("#note > textarea").val(desc[0].elemnt);
 			//Add note with dragElement function.
 		$("#addNote").click(()=>{
-			numOfNotes += 1;
-			var newNote =$('<div id="note" class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button></div><textarea></textarea></div>');
+			var newNote =$('<div class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button></div><textarea onfocusout="saveContent(this)"></textarea></div>');
 			$("#main").append(newNote);
 			console.log(newNote[0]);
 			dragElement(newNote[0]);
+			numSet.add(newNote[0]);
 		});
 		
 	});
-
-	
-		
-
 
 	//First note created.			
 	dragElement(document.getElementsByClassName(("note"))[0]);			
@@ -91,10 +97,24 @@ function changeColor(elemnt){
 
 //Delete note.
 function deleteNote(note){
-	console.log("clicked")
+	console.log(numSet.size)
+	numSet.delete(note.parentNode.parentNode);
 	note.parentNode.parentNode.remove();
-	
-	
+}
+function saveContent(elemnt){
+	console.log("focous out");
+	numSet.add(elemnt.parentNode);
+		taskDesc.push(elemnt.value);
+		localStorage.setItem(USER_NAME,JSON.stringify(taskDesc))
+			console.log(JSON.parse(localStorage.getItem(USER_NAME)));
+}
+
+function getInfo(){
+	for (var i of taskDesc){
+		var newNote =$('<div class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button></div><textarea onfocusout="saveContent(this)">'+i+'</textarea></div>');
+		dragElement(newNote[0]);
+			$("#main").append(newNote);
+	}
 	
 }
 

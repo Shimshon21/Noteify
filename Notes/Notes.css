@@ -88,7 +88,6 @@ opacity:1;
 }
 
 #addNote {
-	background:cyan;
 	position:absolute;
 	width:100px;
 	height:100px;
@@ -96,6 +95,19 @@ opacity:1;
 	right:100px;
 	bottom:100px;
 }
+#addNote>img{
+	position:absolute;
+	width:100px;
+	height:100px;
+}
+
+#addNote>img:hover{
+	position:absolute;
+	width:100px;
+	height:100px;
+	opacity:0.8;
+}
+
 
 .options{
 	display:inline ;
