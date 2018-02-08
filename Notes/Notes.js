@@ -5,19 +5,18 @@
 	var USER_NAME="userName";
 	//var storage = window.localStorage;
 	let main = document.getElementById("main");
-	var taskDesc =[];
+		var taskDesc =[{"sadasdsa":"asdsadasdsa"}] ;
 //On load.
 	$(() =>{
-	;
 		console.log($("#note")[0]);
 		numSet.add($("#note")[0])
 			animateNote($(".note"))
-		taskDesc= JSON.parse(localStorage.getItem(USER_NAME));
+		//taskDesc = JSON.parse(localStorage.getItem(USER_NAME));
 			getInfo()
 			//$("#note > textarea").val(desc[0].elemnt);
 			//Add note with dragElement function.
 		$("#addNote").click(()=>{
-			var newNote =$('<div class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button></div><textarea onfocusout="saveContent(this)"></textarea></div>');
+			var newNote =$('<div class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button><input type="text" placeholder="title" /></div><textarea onfocusout="saveContent(this)"></textarea></div>');
 			$("#main").append(newNote);
 			console.log(newNote[0]);
 			dragElement(newNote[0]);
@@ -102,19 +101,32 @@ function deleteNote(note){
 	note.parentNode.parentNode.remove();
 }
 function saveContent(elemnt){
-	console.log("focous out");
+	var storages = JSON.parse(localStorage.getItem(USER_NAME)) 
+	var title = elemnt.parentNode.getElementsByTagName("div")[0].getElementsByTagName("input")[1];
+	var js = {}
+	for(i of storages ){
+		console.log(i);
+		console.log(i[title.value] +"test");
+		if(i[title.value] === undefined){
+				js[title.value] = elemnt.value ;
 	numSet.add(elemnt.parentNode);
-		taskDesc.push(elemnt.value);
+		taskDesc.push(js);
 		localStorage.setItem(USER_NAME,JSON.stringify(taskDesc))
-			console.log(JSON.parse(localStorage.getItem(USER_NAME)));
+			//console.log(JSON.parse(localStorage.getItem(USER_NAME)));
+			break;
+	}
+
+}
 }
 
 function getInfo(){
-	for (var i of taskDesc){
-		var newNote =$('<div class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button></div><textarea onfocusout="saveContent(this)">'+i+'</textarea></div>');
+	taskDesc = JSON.parse(localStorage.getItem(USER_NAME))
+	console.log(taskDesc);
+	/*for (var i of taskDesc){
+		var newNote =$('<div class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button><input type="text" placeholder="title" /></div><textarea onfocusout="saveContent(this)">'+i+'</textarea></div>');
 		dragElement(newNote[0]);
 			$("#main").append(newNote);
-	}
-	
+	}*/
 }
+
 
