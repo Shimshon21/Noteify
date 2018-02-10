@@ -9,7 +9,7 @@ body{
  background-repeat: no-repeat;
  background-size: cover;
  width: 100vw;
- height: 100vh;
+ height: 100%;
 }
 
 
@@ -17,13 +17,11 @@ body{
 
 
 #main{
-width:100%;
-height:90vh;
-position:relative;
-top:20px;
+width:60%;
+height:100%;
+position:absolute;
+left:20%;
 margin:0;
-overflow:hidden;
-
 /*box-shadow:4px 10px 99px white ;*/
 opacity:1;
 }
@@ -31,98 +29,76 @@ opacity:1;
 	height:100%;
 	width:100%;
 	margin:0;
-	position:absolute;
-	border-bottom-style: solid;
-	border-bottom-width: 20px;
-	border-bottom-color:green;
-	border-top-style: solid;
-	border-top-width:20px;
-	border-top-color:rgba(0,0,0,0.6);
 	background: linear-gradient(180deg,  #757F9A,#D7DDE8);
 	opacity:0.6;
 }
 
-.note{
+#note{
 	background-color:rgba(0,255,255,0.6);
 	border-width:4px;
 	border-color: rgba(255,255,255,0.8);
 	border-style:solid;
 	border-radius:10%;
+	overflow:auto;
+	position:relative;
 	position:absolute;
-	left:100px;
-	top:100px;
-	height:200px;
-	width:200px;
+	left:30%;
+	top:50px;
+	height:100%;
+	width:40%;
 }
 
-	.a{
-					background-color:rgba(0,255,255,0.6);
-	border-width:2px;
-	border-color:white;
-	border-radius:10%;
-	position:absolute;
-	left:100px;
-	top:100px;
-	height:200px;
-	width:200px;
-			}
-			
-			
-.note>textarea{
 
-	overflow:hidden;
-	resize:none;
-	box-sizing:border-box;
-	color:white;
-	height:80%;
-	border-radius:10%;
-	margin:0;
+#container{
+	display:block;
+	height:60%;
 	width:100%;
-	float:bottom;
-	background:transparent;
 }
-
-.note>textarea:focus{
-	  outline:0px !important;
-    -webkit-appearance:none;
+#ulContainer{
+	display:inline;
 }
-
-#addNote {
-	position:absolute;
-	width:100px;
-	height:100px;
-	border-radius:50%;
-	right:100px;
-	bottom:100px;
-}
-#addNote>img{
-	position:absolute;
-	width:100px;
-	height:100px;
-}
-
-#addNote>img:hover{
-	position:absolute;
-	width:100px;
-	height:100px;
-	opacity:0.8;
-}
-
-
-.options{
-	display:inline ;
+#note >input{
+	position:relative;
+	background:white;
+	border:hidden;
 	height:10%;
-		width:100%;
-	cursor:-webkit-grab;
+	width:100%;
+	margin-top:15px;
 }
-.options >input{
-margin-left:10px;
+#note li{
 }
-.options >button{
-height:10%;
-  background-image: url( 'trash.png' );
-  background-size:20px;
+
+#options{
+	height:20%;
+	width:100%;
+	display:inline;
+	margin-bottom:0;
 }
+#options>button:first-child{
+		position:relative;
+	height:20%;
+	width:49%;
+	margin:0;
+	padding:0;
+	background:transparent;
+	border-color:black;
+}
+#options>button:nth-child(2){
+	position:relative;
+	height:20%;
+	width:49%;
+	margin:0;
+	padding:0;
+	background:transparent;
+	border-color:black;
+}
+#options>button:nth-child(2):hover{
+	background-color:cyan;
+}
+#options>button:first-child:hover{
+		background-color:cyan;
+}
+
 
 .options:hover{
 	cursor:-webkit-grab;

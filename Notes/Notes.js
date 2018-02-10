@@ -5,128 +5,78 @@
 	var USER_NAME="userName";
 	//var storage = window.localStorage;
 	let main = document.getElementById("main");
-		var taskDesc =[{"sadasdsa":"asdsadasdsa"}] ;
 //On load.
 	$(() =>{
-		console.log($("#note")[0]);
-		numSet.add($("#note")[0])
-			animateNote($(".note"))
-		//taskDesc = JSON.parse(localStorage.getItem(USER_NAME));
-			getInfo()
-			//$("#note > textarea").val(desc[0].elemnt);
-			//Add note with dragElement function.
-		$("#addNote").click(()=>{
-			var newNote =$('<div class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button><input type="text" placeholder="title" /></div><textarea onfocusout="saveContent(this)"></textarea></div>');
-			$("#main").append(newNote);
-			console.log(newNote[0]);
-			dragElement(newNote[0]);
-			numSet.add(newNote[0]);
-		});
-		
+ getData();
 	});
-
-	//First note created.			
-	dragElement(document.getElementsByClassName(("note"))[0]);			
 	
-	function dragElement(elmnt) {
-	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-	  elmnt.onmousedown = dragMouseDown;
-
-	//when click on note.
-  function dragMouseDown(e) {
-    e = e || window.event;
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  //When drag note.
-  function elementDrag(e) {
-    e = e || window.event;
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX ;
-	console.log(pos4 + "-" + e.clientY);
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-	console.log(elmnt.offsetTop);
-	console.log(pos2);
-	elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-  }
-  
-  //stop moving when mouse button is released.
-  function closeDragElement() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
-
-//Animation for notes.
-function animateNote(elemnt){
-	var height = 20;
-	var width = 20;
-	var  note =$(".note")[0];
-	var a=setInterval(function(){
-	if(elemnt.offsetHeight < 200){
-		elemnt.css({"height":(height += 20)+'px',"width":(width += 20)+'px'});
-	}else{
-			clearInterval(a);
+	
+	function addTask(){
+		var inputTask = $("#input").val()
+		var storage = JSON.parse(localStorage.getItem(USER_NAME,JSON));
+		console.log($("#list>li").length);
+		$("#list").append("<li><input type='checkbox' onchange='changeColor(this)'></input>"+inputTask+"</li>");
+		if(storage==null){
+			storage= [{[$("#list>li").length]:inputTask,"check":false}]
+		}else{
+		storage.push( {[$("#list>li").length]:inputTask,"check":false});
 		}
-	},40);
-}
+			console.log(storage);
+		 localStorage.setItem(USER_NAME,JSON.stringify(storage))
+		$("#input").val("");
+	}
+	
+	
+	function clearList(){
+		console.log("deleted");
+		$("#list").html("");
+		 localStorage.setItem(USER_NAME,JSON.stringify(null))
+	}
 
 //Change note color.
 function changeColor(elemnt){
-	console.log(elemnt.parentNode.parentNode.childNodes);
+	console.log(elemnt.parentNode);
+			elemnt.parentNode.style.color = "green";
+			var storage=JSON.parse(localStorage.getItem(USER_NAME));
+			var lineData = "";
+			var index = 0;
+	for (i=0;i<storage.length;i++){
+		lineData = storage[i];
+		console.log(lineData[i+1]);
+		console.log(elemnt.parentNode.textContent);
+		if(lineData[i+1]===elemnt.parentNode.textContent){
+			console.log("true");
+		index=i;
+		break;			
+		}	
+	}
 	if(elemnt.checked){
-		elemnt.parentNode.parentNode.style.backgroundColor="rgba(0,255,0,0.6)" ;
-		elemnt.parentNode.parentNode.style.height="20px"
-		elemnt.parentNode.parentNode.childNodes[3].style.display="none";
+		storage[index]["check"]=true;
+		localStorage.setItem(USER_NAME,JSON.stringify(storage))
 	}else{
-		elemnt.parentNode.parentNode.style.backgroundColor="rgba(0,255,255,0.6)";
-		elemnt.parentNode.parentNode.style.height="200px"
-		elemnt.parentNode.parentNode.childNodes[3].style.display="block";
+		console.log("UnChecked.")
+		elemnt.parentNode.style.color = "black";
+		storage[index]["check"]=false;
+		localStorage.setItem(USER_NAME,JSON.stringify(storage))
+	}
+}
+function getData(){
+	var storage=JSON.parse(localStorage.getItem(USER_NAME));
+	for (i=0;i<storage.length;i++){
+		var lineData = storage[i];
+		var color="black";
+		var checked=""
+		if(lineData["check"]){
+				$("#list").append("<li style='color:green;'><input type='checkbox' onchange='changeColor(this)' checked></input>"+lineData[i+1]+"</li>");
+		}
+		else{
+			$("#list").append("<li color='black'><input type='checkbox' onchange='changeColor(this)' ></input>"+lineData[i+1]+"</li>");
+		}
+		
 	}
 }
 
-//Delete note.
-function deleteNote(note){
-	console.log(numSet.size)
-	numSet.delete(note.parentNode.parentNode);
-	note.parentNode.parentNode.remove();
-}
-function saveContent(elemnt){
-	var storages = JSON.parse(localStorage.getItem(USER_NAME)) 
-	var title = elemnt.parentNode.getElementsByTagName("div")[0].getElementsByTagName("input")[1];
-	var js = {}
-	for(i of storages ){
-		console.log(i);
-		console.log(i[title.value] +"test");
-		if(i[title.value] === undefined){
-				js[title.value] = elemnt.value ;
-	numSet.add(elemnt.parentNode);
-		taskDesc.push(js);
-		localStorage.setItem(USER_NAME,JSON.stringify(taskDesc))
-			//console.log(JSON.parse(localStorage.getItem(USER_NAME)));
-			break;
-	}
 
-}
-}
 
-function getInfo(){
-	taskDesc = JSON.parse(localStorage.getItem(USER_NAME))
-	console.log(taskDesc);
-	/*for (var i of taskDesc){
-		var newNote =$('<div class="note" onload="animateNote(this);return false;"><div id="options" class="options" ><input type="checkbox" onchange="changeColor(this)"/><button id="delBtn" onclick="deleteNote(this)"></button><input type="text" placeholder="title" /></div><textarea onfocusout="saveContent(this)">'+i+'</textarea></div>');
-		dragElement(newNote[0]);
-			$("#main").append(newNote);
-	}*/
-}
 
 
