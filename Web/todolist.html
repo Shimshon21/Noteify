@@ -1,24 +1,32 @@
 
 	
     <script src="todolist.js"></script>	
+	
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="notify.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src="notify.js"></script>
+	<script src="todolist.js"></script>
 	<link rel="stylesheet" href="todolist.css">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/localization/messages_en.js"></script>
+
 	
 
 
 	
 	<div class="container-fluid" >
+	
 				<div class="row">
 				<div class="col-md-4 col-sm-4 col-xs-12"></div>
 				<div class="col-md-4 col-sm-4 col-xs-12">
-
-
+					
+					<!-- Login Form -->
+					
 					<form id="login_1" class="form-conatiner">
 					<div class="row">
 							<div class="col-xs-6"
@@ -26,11 +34,11 @@
 									<a id="reg" href="#">Register</a>
 								</nav>
 							</div>
-						
 						</div>
 						
 
-						<div class="form-group">						
+						<div class="form-group">	
+						
 								<label for="LoginEmail">Email Address</label>
 								<input type="email" class="form-control" id="LoginEmail" placeholder="Enter Email" required>
 						</div>
@@ -47,9 +55,10 @@
 							</div>
 
 						<button type="submit" id="btnLogin" class="btn btn-primary btn-block">Login</button>
-
 				</form>
-
+				
+				<!-- Register Form -->
+				
 				<form id="reg_1" class="form-conatiner2">
 					<div class="row">
 							<div class="col-xs-6"
@@ -86,15 +95,6 @@
 
 						<button type="submit" id="btnRegister" class="btn btn-primary btn-block">Register</button>
 				    </form>
-				
-				
-					<form id="tester" class="form-conatiner3">
-							<div class="form-group">
-								<ul id="intput_1">
-									
-								</ul>
-							</div>
-					</form>
 
 			</div>
 			<div class="col-md-4 col-sm-4 col-xs-12"></div>

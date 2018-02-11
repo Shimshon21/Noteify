@@ -14,14 +14,23 @@ $(() => {
         
 		var s = window.localStorage
 		var ArrayData = {}
-        ArrayData={"pass": $("#InputPassword").val(), "email": $("#InputEmail").val()}
-        s.setItem($("#InputName").val(), JSON.stringify(ArrayData))
-        console.log(s.getItem($("#InputName").val()))
+        ArrayData={"pass": $("#InputPassword").val(), "name": $("#InputName").val()}
+        s.setItem($("#InputEmail").val(), JSON.stringify(ArrayData))
+        console.log(s.getItem($("#InputEmail").val()))
 
     })
 	$("#btnLogin").click(()=>{
-		console.log("Hello")
-	})
+		var l = window.localStorage
+		var key=JSON.parse(l.getItem($("#LoginEmail").val()))
+		
+		if(key["pass"] === $("#LoginPassword").val()){
+			console.log("user confirmed")
+		}
+		else{
+			
+			alert("Error")
+	}
+})
 	
 	
  /*  
