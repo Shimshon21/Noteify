@@ -58,7 +58,7 @@ opacity:1;
 	border:hidden;
 	height:10%;
 	width:100%;
-	margin-top:15px;
+	margin-top:30px;
 }
 #options{
 	height:20%;
@@ -81,14 +81,29 @@ opacity:1;
 	width:49%;
 	margin:0;
 	padding:0;
+	float:right;
 	background:transparent;
 	border-color:black;
 }
+
+#options>button:nth-child(3){
+	position:relative;
+	height:10%;
+	width:100%;
+	margin-top:5px;
+	padding:0;
+	background:transparent;
+	border-color:black;
+}
+
 #options>button:nth-child(2):hover{
 	background-color:cyan;
 }
 #options>button:first-child:hover{
 		background-color:cyan;
+}
+#options>button:nth-child(3):hover{
+	background-color:cyan;
 }
 
 

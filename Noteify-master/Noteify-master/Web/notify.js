@@ -90,6 +90,7 @@ $(()=>{
 	
 	//Add task to the list.
 	function addTask(){	
+		var USER_NAME = localStorage.getItem("CurrentUser");
 		var inputTask = $("#input").val();
 		var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
 		if(mainStorage != null){
@@ -107,18 +108,47 @@ $(()=>{
 			alert("You need to register to use this feature");
 		}
 		}
+		
+	//Delete checked tasks.	
+	function deleteMarked(elemnt){
+		var USER_NAME = localStorage.getItem("CurrentUser");
+		 var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
+		 if(mainStorage !=null){
+		 storage = mainStorage["tasks"];
+		var tasks = $("#list").children();
+		for (i=0;i<storage.length;i++){
+			if(storage[i]["check"]){
+				console.log("deleted"+i);
+				tasks[i].remove();
+				for(j=1;j<(storage.length-i);j++){
+				storage[i] = storage[i+j];	
+				}
+				storage.splice(storage.length-1,1);
+			}
+						/*console.log(tasks[i].getElementsByTagName("input")[0].checked);
+						if(tasks[i].getElementsByTagName("input")[0].checked){
+							$(tasks[i]).remove();
+							mainStorage["tasks"][i];*/
+						}
+						mainStorage["tasks"]=storage;
+						localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
+						}else alert("You need to register to use this feature");
+											
+		 }
+		
 	
 	//Remove all tasks.
 		function clearList(){
-		$("#list").html("");
-		 var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
-		 if(mainStorage !=null){
-			storage=mainStorage["tasks"];
-			storage = null;
-			mainStorage["tasks"] = storage;
-			localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
-			console.log("List tasks were deleted.");
-		}else alert("You need to register to use this feature");
+			var USER_NAME = localStorage.getItem("CurrentUser");
+			$("#list").html("");
+			 var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
+			 if(mainStorage !=null){
+				storage=mainStorage["tasks"];
+				storage = null;
+				mainStorage["tasks"] = storage;
+				localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
+				console.log("List tasks were deleted.");
+			}else alert("You need to register to use this feature");
 		}
 		
 		//Change note color.
