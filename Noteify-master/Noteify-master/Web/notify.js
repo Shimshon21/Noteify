@@ -61,20 +61,19 @@ $(()=>{
 });
 	
 	//login and registration java script in addition
-		function register(){
+	function register(){
 		$("#btnRegister").click((e)=>{	
-		e.preventDefault();
-		var s = window.localStorage
-		var ArrayData = {}
-        ArrayData={"pass": $("#InputPassword").val(), "name": $("#InputName").val(),"tasks":[{"bdika":"bdika"}]};
-        s.setItem($("#InputEmail").val(), JSON.stringify(ArrayData));
-        console.log(s.getItem($("#InputEmail").val()));
-		$("#reg_1").hide(500);
-		$("#login_1").show(500);
+			e.preventDefault();
+			var s = window.localStorage
+			var ArrayData = {};
+		    ArrayData={"pass": $("#InputPassword").val(), "name": $("#InputName").val(),"tasks":[{"bdika":"bdika"}]};
+		    s.setItem($("#InputEmail").val(), JSON.stringify(ArrayData));
+			$("#reg_1").hide(500);
+			$("#login_1").show(500);
 			});
-		}
-		
-			//Change Section Data To Note.html
+	}
+	
+		//Change Section Data To Note.html
 	function moveToNotes(){
 		var notesPage = 'Notes.html';
 		$.get(notesPage, (res)=>{
@@ -87,84 +86,94 @@ $(()=>{
 
 
 	
-	//Notes java script starts from here(Shimshon)
-	function addTask(){
+	//Notes java script starts from here(Shimshon).
+	
+	//Add task to the list.
+	function addTask(){	
 		var inputTask = $("#input").val();
 		var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
-		storage = mainStorage["tasks"];
-		console.log($("#list>li").length);
-		$("#list").append("<li><input type='checkbox' onchange='changeColor(this)'></input>"+inputTask+"</li>");
+		if(mainStorage != null){
+			storage = mainStorage["tasks"];
+			$("#list").append("<li><input type='checkbox' onchange='changeColor(this)'></input>"+inputTask+"</li>");
 		if(storage==null){
 			storage= [{[$("#list>li").length]:inputTask,"check":false}]
 		}else{
-		storage.push( {[$("#list>li").length]:inputTask,"check":false});
+			storage.push( {[$("#list>li").length]:inputTask,"check":false});
 		}
-			console.log(storage);
 			mainStorage["tasks"]=storage
-		 localStorage.setItem(USER_NAME,JSON.stringify(mainStorage))
-		$("#input").val("");
-	}
+			localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
+			$("#input").val("");
+		}else{
+			alert("You need to register to use this feature");
+		}
+		}
 	
+	//Remove all tasks.
 		function clearList(){
-		console.log("deleted");
 		$("#list").html("");
 		 var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
-		 storage=mainStorage["tasks"];
-		 storage = null;
-		 mainStorage["tasks"] = storage;
-		 localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
-	}
+		 if(mainStorage !=null){
+			storage=mainStorage["tasks"];
+			storage = null;
+			mainStorage["tasks"] = storage;
+			localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
+			console.log("List tasks were deleted.");
+		}else alert("You need to register to use this feature");
+		}
+		
 		//Change note color.
 		function changeColor(elemnt){
-		console.log(elemnt.parentNode);
+			console.log("Color Change for:"+elemnt.parentNode);
 			elemnt.parentNode.style.color = "green";
 			var mainStorage=JSON.parse(localStorage.getItem(USER_NAME));
-			storage = mainStorage["tasks"];
-			var lineData = "";
-			var index = 0;
-		for (i=0;i<storage.length;i++){
-			lineData = storage[i];
-			console.log(lineData[i+1]);
-			console.log(elemnt.parentNode.textContent);
-			if(lineData[i+1]===elemnt.parentNode.textContent){
-				console.log("true");
-					index=i;
-					break;			
-		}	
-	}
-	if(elemnt.checked){
-		storage[index]["check"]=true;
-		mainStorage["tasks"]=storage;
-		localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
-	}else{
-		console.log("UnChecked.")
-		elemnt.parentNode.style.color = "black";
-		storage[index]["check"]=false;
-		mainStorage["tasks"]=storage;
-		localStorage.setItem(USER_NAME,JSON.stringify(mainStorage))
-	}
-}
+			if(mainStorage != null){
+				storage = mainStorage["tasks"];
+				var lineData = "";
+				var index = 0;
+				for (i=0;i<storage.length;i++){
+					lineData = storage[i];
+					console.log(lineData[i+1]);
+					console.log(elemnt.parentNode.textContent);
+					if(lineData[i+1]===elemnt.parentNode.textContent){
+						console.log("true");
+						index=i;
+						break;			
+						}	
+					}		
+				if(elemnt.checked){
+					storage[index]["check"]=true;
+					mainStorage["tasks"]=storage;
+					localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
+				}else{
+					elemnt.parentNode.style.color = "black";
+					storage[index]["check"]=false;
+					mainStorage["tasks"]=storage;
+					localStorage.setItem(USER_NAME,JSON.stringify(mainStorage))
+				}
+			}else alert("You need to register to use this feature.")
+		}
 	
-	function getData(){
-		var USER_NAME = localStorage.getItem("CurrentUser");
-		var mainStorage=JSON.parse(localStorage.getItem(USER_NAME));
-		storage = mainStorage["tasks"];
-		if (storage === undefined){
-			storage = [{[$("#list>li").length]:inputTask,"check":false}]
-		}
-		for (i=0;i<storage.length;i++){
-			var lineData = storage[i];
-			var color="black";
-			var checked=""
-			if(lineData["check"]){
-				$("#list").append("<li style='color:green;'><input type='checkbox' onchange='changeColor(this)' checked></input>"+lineData[i+1]+"</li>");
+	//Load tasks.
+		function getData(){
+			var USER_NAME = localStorage.getItem("CurrentUser");
+			var mainStorage=JSON.parse(localStorage.getItem(USER_NAME));
+			if(mainStorage != null){
+				storage = mainStorage["tasks"];
+			if (storage === undefined){
+				storage = [{[$("#list>li").length]:inputTask,"check":false}]
 			}
-			else{
-				$("#list").append("<li color='black'><input type='checkbox' onchange='changeColor(this)' ></input>"+lineData[i+1]+"</li>");
+			for (i=0;i<storage.length;i++){
+				var lineData = storage[i];
+				var color="black";
+				var checked=""
+				if(lineData["check"]){
+					color="green";
+					checked="checked";
+				}
+				$("#list").append("<li style='color:"+color+";'><input type='checkbox' onchange='changeColor(this)' "+checked+"></input>"+lineData[i+1]+"</li>");
 			}
-			
+			}else console.log("You need to register to use this feature.")
 		}
-}
 
 
 
