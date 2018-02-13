@@ -120,15 +120,13 @@ $(()=>{
 			if(storage[i]["check"]){
 				console.log("deleted"+i);
 				tasks[i].remove();
-				for(j=1;j<(storage.length-i);j++){
-				storage[i] = storage[i+j];	
+				for(j=0;j<(storage.length-i);j++){
+					console.log(i);
+					console.log(storage[i+j]);
+				storage[i+j] = storage[i+(j+1)];	
 				}
 				storage.splice(storage.length-1,1);
 			}
-						/*console.log(tasks[i].getElementsByTagName("input")[0].checked);
-						if(tasks[i].getElementsByTagName("input")[0].checked){
-							$(tasks[i]).remove();
-							mainStorage["tasks"][i];*/
 						}
 						mainStorage["tasks"]=storage;
 						localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
@@ -162,9 +160,9 @@ $(()=>{
 				var index = 0;
 				for (i=0;i<storage.length;i++){
 					lineData = storage[i];
-					console.log(lineData[i+1]);
+					console.log(lineData[Object.keys(lineData)[0]]);
 					console.log(elemnt.parentNode.textContent);
-					if(lineData[i+1]===elemnt.parentNode.textContent){
+					if(lineData[Object.keys(lineData)[0]] === elemnt.parentNode.textContent){
 						console.log("true");
 						index=i;
 						break;			
@@ -196,11 +194,12 @@ $(()=>{
 				var lineData = storage[i];
 				var color="black";
 				var checked=""
+				console.log(lineData[Object.keys(lineData)[0]]);
 				if(lineData["check"]){
 					color="green";
 					checked="checked";
 				}
-				$("#list").append("<li style='color:"+color+";'><input type='checkbox' onchange='changeColor(this)' "+checked+"></input>"+lineData[i+1]+"</li>");
+				$("#list").append("<li style='color:"+color+";'><input type='checkbox' onchange='changeColor(this)' "+checked+"></input>"+lineData[Object.keys(lineData)[0]]+"</li>");
 			}
 			}else console.log("You need to register to use this feature.")
 		}
