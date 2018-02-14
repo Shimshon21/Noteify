@@ -31,22 +31,13 @@ body{
 	-moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
 	box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
 }
-.form-conatiner3{
-	border: 0px solid white;
-	padding: 50px 60px;
-	margin-top: 20vh;
-	-webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-	-moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-	box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-}
+
 
 .form-conatiner2{
 	display: none;
 }
 
-.form-conatiner3{
-	display: none;
-}
+
 
 #reg{
 	cursor: pointer;

@@ -31,8 +31,7 @@ section{
 	background-color:rgba(0,250,154,0.15);
 	border: 5px solid ;
 	border-color:rgba(255, 160, 122 , 0.25);
-
-	width:80%
+	width:100%;
 	position: center;
 }
 iframe{
@@ -40,12 +39,4 @@ iframe{
 	height:80vh;
 }
 
-#mainInfo{	
-	text-align:center;
-	background-color:rgba(0,250,154,0.15);
-	border-style: solid;
-    border-width: 5px;
-	width:80%
-	position: center;
-}
- 
+

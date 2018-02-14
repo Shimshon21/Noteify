@@ -1,15 +1,19 @@
-var USER_NAME = localStorage.getItem("CurrentUser");	
+	var USER_NAME = localStorage.getItem("CurrentUser");	
 $(()=>{
-	console.log("on load was called");
+	console.log("on load was called123");
 	const pages = {};
 	/*a method that changes the clicked nav bar item class to "active" and mark him.
 	in addition checks if the current pressed nav bar item is not a link to external website(so preventDefault 
 	method will not be called on him)*/
+	if(localStorage.getItem("CurrentUser")){
+		$("#notesPage").html("Logout");
+		logout();
+	}
 	$(".nav>li>a").click(function(e){
 		console.log(pages);
 		e.preventDefault();
 		$(".active").removeClass("active");
-		$(this).addClass("active");
+		$(this).parent().addClass("active"); 
 		changeHtml(e.target.href);
 	});
 	function changeHtml(url){	
@@ -22,7 +26,6 @@ $(()=>{
 			goToLogin();
 			getData();		
 		});
-		
 	}
 	
 	//login and register java script starts here (Dany)
@@ -38,57 +41,50 @@ $(()=>{
 		$("#login_1").show(500);
 	});
 	}
-	//Login button!
+	
 	 function btnLoginListener(){
 		 	$("#btnLogin").click((e)=>{
 			e.preventDefault();
-			console.log("dani method working");
+			console.log("Dani method working");
 			var l = window.localStorage;
-			var key = JSON.parse(l.getItem($("#LoginEmail").val()));
-			
+			var key=JSON.parse(l.getItem($("#LoginEmail").val()));
 			if(key["pass"] === $("#LoginPassword").val()){
-				l.setItem("CurrentUser", $("#LoginEmail").val());
-				console.log(l.getItem("CurrentUser"));
+				l.setItem("CurrentUser" ,$("#LoginEmail").val());
+				console.log(l.getItem("CurrentUser"));	
 				moveToNotes();
 				$("#notesPage").html("Logout");
-				logOut();
-				
+				logout();
+			}else{
+				alert("Wrong user inputs","Error");
 			}
-			else {
-				$("#passVali").text("Invalid Password");
-			
-			}
-		});
-	 }
-	//Logout button!
-	function logOut(){
-		$(notesPage).click(()=>{
-			
+				});
+	 }	
+
+	
+	
+});
+	function logout(){
+		$("#notesPage").click(()=>{
 			if($("#notesPage").html("Login")){
-				console.log("success");
-				localStorage.removeItem("CurrentUser");		
-			}
-			else{
-				alert("failed");
+				console.log("work");
+				localStorage.removeItem("CurrentUser");
+				return "";
+			}else{
+				console.log("failed");
 			}
 		})
-	
 	}
-
-		
-});
-
 	//login and registration java script in addition
 	function register(){
 		$("#btnRegister").click((e)=>{	
 			e.preventDefault();
 			var s = window.localStorage
 			var ArrayData = {};
-		    ArrayData = {"pass": $("#InputPassword").val(), "name": $("#InputName").val(),"tasks":[{"bdika":"bdika"}]};
+		    ArrayData={"pass": $("#InputPassword").val(), "name": $("#InputName").val(),"tasks":[{"bdika":"bdika"}]};
 		    s.setItem($("#InputEmail").val(), JSON.stringify(ArrayData));
 			$("#reg_1").hide(500);
 			$("#login_1").show(500);
-		});
+			});
 	}
 	
 		//Change Section Data To Note.html
@@ -100,43 +96,77 @@ $(()=>{
 			getData();
 		});
 	}       
+
+
+
 	
 	//Notes java script starts from here(Shimshon).
 	
 	//Add task to the list.
 	function addTask(){	
+		var USER_NAME = localStorage.getItem("CurrentUser");
 		var inputTask = $("#input").val();
 		var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
 		if(mainStorage != null){
-			
 			storage = mainStorage["tasks"];
 			$("#list").append("<li><input type='checkbox' onchange='changeColor(this)'></input>"+inputTask+"</li>");
-			
-			if(storage == null){
-				storage= [{[$("#list>li").length]:inputTask,"check":false}]
-			}else{
+		if(storage==null){
+			storage= [{[$("#list>li").length]:inputTask,"check":false}]
+		}else{
 			storage.push( {[$("#list>li").length]:inputTask,"check":false});
 		}
-			mainStorage["tasks"] = storage
+			mainStorage["tasks"]=storage
 			localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
 			$("#input").val("");
-		}
-		else{
+		}else{
 			alert("You need to register to use this feature");
 		}
 		}
+		
+	//Delete checked tasks.	
+	function deleteMarked(elemnt){
+		var USER_NAME = localStorage.getItem("CurrentUser");
+		var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
+		if(mainStorage !=null){
+			if (confirm("Are you sure?")) {
+				txt = "You pressed OK!";
+		var storage = mainStorage["tasks"];
+		var tasks = $("#list").children();
+		for (i=0;i<storage.length;i++){
+			if(storage[i]["check"] ){
+				console.log(tasks[i].textContent);
+				tasks[i].remove();
+				for(j=1;j<(storage.length-i);j++){
+				storage[i]= storage[i+j];
+				//storage[i][i] = storage[i+j][i+j];
+				}
+				storage.splice(storage.length-1,1);
+			}
+						}
+						mainStorage["tasks"]=storage;
+						localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
+						console.log(tasks)
+		
+						moveToNotes();
+						
+			}
+						}else alert("You need to register to use this feature");
+											
+		 }
+		
 	
 	//Remove all tasks.
 		function clearList(){
-		$("#list").html("");
-		 var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
-		 if(mainStorage != null){
-			storage = mainStorage["tasks"];
-			storage = null;
-			mainStorage["tasks"] = storage;
-			localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
-			console.log("List tasks were deleted.");
-		}else alert("You need to register to use this feature");
+			var USER_NAME = localStorage.getItem("CurrentUser");
+			$("#list").html("");
+			 var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
+			 if(mainStorage !=null){
+				storage=mainStorage["tasks"];
+				storage = null;
+				mainStorage["tasks"] = storage;
+				localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
+				console.log("List tasks were deleted.");
+			}else alert("You need to register to use this feature");
 		}
 		
 		//Change note color.
@@ -152,7 +182,7 @@ $(()=>{
 					lineData = storage[i];
 					console.log(lineData[i+1]);
 					console.log(elemnt.parentNode.textContent);
-					if(lineData[i+1]===elemnt.parentNode.textContent){
+					if(lineData[Object.keys(lineData)[0]]===elemnt.parentNode.textContent){
 						console.log("true");
 						index=i;
 						break;			
@@ -174,9 +204,9 @@ $(()=>{
 	//Load tasks.
 		function getData(){
 			var USER_NAME = localStorage.getItem("CurrentUser");
-			var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
+			var mainStorage=JSON.parse(localStorage.getItem(USER_NAME));
 			if(mainStorage != null){
-				storage = mainStorage["tasks"];
+			var	storage = mainStorage["tasks"];
 			if (storage === undefined){
 				storage = [{[$("#list>li").length]:inputTask,"check":false}]
 			}
@@ -188,7 +218,7 @@ $(()=>{
 					color="green";
 					checked="checked";
 				}
-				$("#list").append("<li style='color:"+color+";'><input type='checkbox' onchange='changeColor(this)' "+checked+"></input>"+lineData[i+1]+"</li>");
+				$("#list").append("<li style='color:"+color+";'><input type='checkbox' onchange='changeColor(this)' "+checked+"></input>"+lineData[Object.keys(lineData)[0]]+"</li>");
 			}
 			}else console.log("You need to register to use this feature.")
 		}
