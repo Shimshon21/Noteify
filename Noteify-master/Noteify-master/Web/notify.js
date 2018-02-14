@@ -10,7 +10,7 @@ $(()=>{
 		logout();
 	}
 	$(".nav>li>a").click(function(e){
-		console.log(pages);
+		console.log("login");
 		e.preventDefault();
 		$(".active").removeClass("active");
 		$(this).parent().addClass("active"); 
@@ -65,6 +65,7 @@ $(()=>{
 });
 	function logout(){
 		$("#notesPage").click(()=>{
+			console.log("login");
 			if($("#notesPage").html("Login")){
 				console.log("work");
 				localStorage.removeItem("CurrentUser");
@@ -79,12 +80,11 @@ $(()=>{
 		$("#btnRegister").click((e)=>{	
 			e.preventDefault();
 			var s = window.localStorage
-			var ArrayData = {};
-		    ArrayData={"pass": $("#InputPassword").val(), "name": $("#InputName").val(),"tasks":[{"bdika":"bdika"}]};
-		    s.setItem($("#InputEmail").val(), JSON.stringify(ArrayData));
+			var data = {"pass": $("#InputPassword").val(), "name": $("#InputName").val(),"tasks":{}};
+		    s.setItem($("#InputEmail").val(), JSON.stringify(data));
 			$("#reg_1").hide(500);
 			$("#login_1").show(500);
-			});
+		});
 	}
 	
 		//Change Section Data To Note.html
@@ -107,52 +107,43 @@ $(()=>{
 		var USER_NAME = localStorage.getItem("CurrentUser");
 		var inputTask = $("#input").val();
 		var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
-		if(mainStorage != null){
-			storage = mainStorage["tasks"];
-			$("#list").append("<li><input type='checkbox' onchange='changeColor(this)'></input>"+inputTask+"</li>");
-		if(storage==null){
-			storage= [{[$("#list>li").length]:inputTask,"check":false}]
-		}else{
-			storage.push( {[$("#list>li").length]:inputTask,"check":false});
-		}
-			mainStorage["tasks"]=storage
-			localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
-			$("#input").val("");
-		}else{
-			alert("You need to register to use this feature");
-		}
-		}
+		
+			var tasks = mainStorage.tasks;
+			if(inputTask && !tasks[inputTask]){
+				tasks[inputTask] = {"check":false};
+				mainStorage["tasks"]=tasks
+				localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
+				$("#input").val("");
+				getData();
+			}
+	}
+			
+	
+		
 		
 	//Delete checked tasks.	
 	function deleteMarked(elemnt){
 		var USER_NAME = localStorage.getItem("CurrentUser");
 		var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
-		if(mainStorage !=null){
+		if(mainStorage){
 			if (confirm("Are you sure?")) {
 				txt = "You pressed OK!";
-		var storage = mainStorage["tasks"];
-		var tasks = $("#list").children();
-		for (i=0;i<storage.length;i++){
-			if(storage[i]["check"] ){
-				console.log(tasks[i].textContent);
-				tasks[i].remove();
-				for(j=1;j<(storage.length-i);j++){
-				storage[i]= storage[i+j];
-				//storage[i][i] = storage[i+j][i+j];
+				var tasks = mainStorage["tasks"];
+				var tasksBoxes = $("#list>li>:checked");
+				
+				for(let i=0; i<tasksBoxes.length; i++){
+					const txt = $(tasksBoxes[i]).next().text();
+					delete tasks[txt];
 				}
-				storage.splice(storage.length-1,1);
-			}
-						}
-						mainStorage["tasks"]=storage;
-						localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
-						console.log(tasks)
-		
-						moveToNotes();
+				mainStorage["tasks"]=tasks;
+				localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
+
+				getData();
 						
 			}
-						}else alert("You need to register to use this feature");
+		}else alert("You need to register to use this feature");
 											
-		 }
+	}
 		
 	
 	//Remove all tasks.
@@ -161,11 +152,13 @@ $(()=>{
 			$("#list").html("");
 			 var mainStorage = JSON.parse(localStorage.getItem(USER_NAME));
 			 if(mainStorage !=null){
+				 if(confirm("delete l")){
 				storage=mainStorage["tasks"];
 				storage = null;
 				mainStorage["tasks"] = storage;
 				localStorage.setItem(USER_NAME,JSON.stringify(mainStorage));
 				console.log("List tasks were deleted.");
+				 }
 			}else alert("You need to register to use this feature");
 		}
 		
@@ -206,25 +199,23 @@ $(()=>{
 			var USER_NAME = localStorage.getItem("CurrentUser");
 			var mainStorage=JSON.parse(localStorage.getItem(USER_NAME));
 			if(mainStorage != null){
-			var	storage = mainStorage["tasks"];
-			if (storage === undefined){
-				storage = [{[$("#list>li").length]:inputTask,"check":false}]
-			}
-			for (i=0;i<storage.length;i++){
-				var lineData = storage[i];
+			var	tasks = mainStorage["tasks"];
+			
+			var tasksLis = "";
+			for (let key in tasks ){
+				var lineData = tasks[key];
 				var color="black";
-				var checked=""
-				if(lineData["check"]){
+				var checked="";
+				if(lineData.check){
 					color="green";
 					checked="checked";
 				}
-				$("#list").append("<li style='color:"+color+";'><input type='checkbox' onchange='changeColor(this)' "+checked+"></input>"+lineData[Object.keys(lineData)[0]]+"</li>");
+				tasksLis += "<li style='color:"+color+";'><input type='checkbox' onchange='changeColor(this)' "+checked+"/><span>"+key+"</span></li>";
 			}
-			}else console.log("You need to register to use this feature.")
+			$("#list").html(tasksLis);
+			}
+			
 		}
-
-
-
 
 
 
